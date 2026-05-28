@@ -1,5 +1,0 @@
-username
-dharnimayekar_db_user
-
-dmWcOLXiRVTTWqaf..........mongodb password for cluster ...spendwise
-s
