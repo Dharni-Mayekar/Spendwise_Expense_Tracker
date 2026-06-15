@@ -7,6 +7,7 @@ import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import Analytics from "../components/Analytics";
 import Budget from "../components/Budget";
+import AIInsights from "../components/AIInsights";
 
 function Dashboard() {
 const [expenses, setExpenses] = useState([]);
@@ -38,6 +39,7 @@ return (
 <Navbar />
 <Analytics expenses={expenses} />
 <Budget expenses={expenses} />
+<AIInsights expenses={expenses} />
 <ExpenseForm fetchExpenses={fetchExpenses} />
 <ExpenseList 
 expenses={expenses}

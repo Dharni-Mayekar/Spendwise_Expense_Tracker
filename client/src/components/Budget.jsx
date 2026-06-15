@@ -29,7 +29,14 @@ function Budget({ expenses }) {
       }}
     >
 
-      <h2>Monthly Budget</h2>
+      <h2
+  style={{
+    color: "#1E3A8A",
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "15px",
+  }}
+>Monthly Budget</h2>
 
       <input
         type="number"

@@ -49,7 +49,15 @@ function Analytics({ expenses }) {
       }}
     >
 
-      <h2>Expense Analytics</h2>
+      <h2
+  style={{
+    color: "#1E3A8A",
+    fontSize: "24px",
+    fontWeight: "bold",
+    marginBottom: "15px",
+  }}
+>
+Expense Analytics</h2>
 
       <ResponsiveContainer width="100%" height={300}>
 
