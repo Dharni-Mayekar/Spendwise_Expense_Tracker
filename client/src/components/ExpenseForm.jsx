@@ -51,7 +51,18 @@ return (
 <br/><br/>
 <input type="number" name="amount" placeholder="Amount" value={formData.amount} onChange={handleChange} />
 <br/><br/>
-<input type="text" name="category" placeholder="Category" value={formData.category} onChange={handleChange} />
+<select
+  name="category"
+  value={formData.category}
+  onChange={handleChange}
+>
+  <option value="">Select Category</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Shopping">Shopping</option>
+  <option value="Bills">Bills</option>
+  <option value="Entertainment">Entertainment</option>
+</select>
 <br/><br/>
 <button type="submit">Add Expense</button>
 </form>
