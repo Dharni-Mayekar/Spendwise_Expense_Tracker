@@ -76,6 +76,12 @@ const searchedExpenses = filteredExpenses.filter(
       searchTerm.toLowerCase()));
     
 console.log("editingExpense:", editingExpense);
+
+const categories = [
+  "All",
+  ...new Set(expenses.map((expense) => expense.category))
+];
+
 return (
 <div style={{
     background: "white",
@@ -97,13 +103,12 @@ return (
     borderRadius: "6px"
   }}
 >
-  <option value="All">All Categories</option>
-  <option value="food">Food</option>
-  <option value="travel">Travel</option>
-  <option value="shopping">Shopping</option>
-  <option value="bills">Bills</option>
-  <option value="entertainment">Entertainment</option>
-</select>
+{categories.map((category) => (
+  <option key={category} value={category}>
+    {category}
+  </option>
+  
+))}</select>
   <input 
 type="text" 
 placeholder="Search Expense..." 
@@ -271,31 +276,23 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
   }}
 />
 
-      <select
-      value={editingExpense.category}
-      onChange={(e) =>
-        setEditingExpense({
-          ...editingExpense,
-          category: e.target.value,
-        })
-      }
-      style={{
-    width: "100%",
+<input type="text" 
+value={editingExpense.category}
+onChange={(e) => 
+  setEditingExpense({
+    ...editingExpense,
+    category: e.target.value
+
+  })
+}
+style={{
+      width: "100%",
     padding: "12px",
-    fontSize: "16px",
     border: "1px solid #ccc",
     borderRadius: "8px",
     marginBottom: "20px",
-
-      }}
-      >
-        <option value="food">Food</option>
-        <option value="travel">Travel</option>
-        <option value="shopping">Shopping</option>
-        <option value="bills">Bills</option>
-        <option value="entertainment">Entertainment</option>
-        <option value="clothes">Clothes</option>
-      </select>
+  }}
+/>
 
       <br/><br/>
  
