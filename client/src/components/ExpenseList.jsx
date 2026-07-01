@@ -37,6 +37,32 @@ console.log(error);
 }
 };
 
+const handleUpdate = async () => {
+  try {
+    const token = localStorage.getItem('token');
+
+    await API.put(
+      `/expenses/${editingExpense._id}`,
+      {
+        title: editingExpense.title,
+        amount: editingExpense.amount,
+        category: editingExpense.category,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    fetchExpenses();
+    setEditingExpense(null);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 const filteredExpenses =
   selectedCategory === "All"
     ? expenses
@@ -49,7 +75,7 @@ const searchedExpenses = filteredExpenses.filter(
     expense.title.toLowerCase().includes(
       searchTerm.toLowerCase()));
     
-
+console.log("editingExpense:", editingExpense);
 return (
 <div style={{
     background: "white",
@@ -135,7 +161,11 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
 </td>
 <td>
   <button
-  onClick={() => setEditingExpense(expense)}
+  onClick={() => { 
+    console.log("edit clicked");
+    console.log(expense);
+    setEditingExpense(expense);
+  }}
   style={{
     background: "#F59E0B",
     color: "white",
@@ -174,15 +204,27 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
 </table>
 {
   editingExpense && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      background: "rgba(0,0,0,0.4)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 9999,
+    }}
+  >
     <div
       style={{
-        position: "fixed",
-        top: "20%",
-        left: "35%",
         background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        boxShadow: "0 0 10px gray"
+        width: "420px",
+        padding: "25px",
+        borderRadius: "12px",
+        boxShadow: "0 5px 25px rgba(0,0,0,0.3)",
       }}
     >
       <h3>Edit Expense</h3>
@@ -197,41 +239,97 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
           })
         }
         style={{
-    width: "100%",
-    padding: "10px"
+    width: "95%",
+    padding: "12px",
+    fontSize: "16px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    outline: "none",
+    marginBottom: "15px",
   }}
       />
 
       <br /><br />
 
-      <input
-        type="number"
-        value={editingExpense.amount}
-        onChange={(e) =>
-          setEditingExpense({
-            ...editingExpense,
-            amount: e.target.value
-          })
-        }
-        style={{
-    width: "100%",
-    padding: "10px"
+<input
+  type="number"
+  value={editingExpense.amount}
+  onChange={(e) =>
+    setEditingExpense({
+      ...editingExpense,
+      amount: e.target.value,
+    })
+  }
+  style={{
+    width: "95%",
+    padding: "12px",
+    fontSize: "16px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    outline: "none",
+    marginBottom: "15px",
   }}
-      />
+/>
 
-      <br /><br />
+      <select
+      value={editingExpense.category}
+      onChange={(e) =>
+        setEditingExpense({
+          ...editingExpense,
+          category: e.target.value,
+        })
+      }
+      style={{
+    width: "100%",
+    padding: "12px",
+    fontSize: "16px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    marginBottom: "20px",
 
-      <button>
-        Save
-      </button>
-
-      <button
-        onClick={() =>
-          setEditingExpense(null)
-        }
+      }}
       >
-        Cancel
-      </button>
+        <option value="food">Food</option>
+        <option value="travel">Travel</option>
+        <option value="shopping">Shopping</option>
+        <option value="bills">Bills</option>
+        <option value="entertainment">Entertainment</option>
+        <option value="clothes">Clothes</option>
+      </select>
+
+      <br/><br/>
+ 
+<button
+  onClick={handleUpdate}
+  style={{
+    background: "#2563EB",
+    color: "white",
+    border: "none",
+    padding: "12px 22px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "bold",
+    marginRight: "10px",
+  }}
+>
+  Save
+</button>
+
+<button
+  onClick={() => setEditingExpense(null)}
+  style={{
+    background: "#6B7280",
+    color: "white",
+    border: "none",
+    padding: "12px 22px",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  }}
+>
+  Cancel
+</button>
+    </div>
     </div>
   )
 }

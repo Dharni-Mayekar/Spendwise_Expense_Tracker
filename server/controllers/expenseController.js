@@ -60,8 +60,37 @@ message: error.message,
 }
 };
 
+
+const updateExpense = async (req, res) => {
+    try {
+        const { title, amount, category } = req. body;
+        const expense = await Expense.findById(req.params.id);
+
+        if (!expense) {
+            return res.status(404).json ({
+                message: "expense not found",
+            });
+        }
+
+        expense.title = title;
+        expense.amount = amount;
+        expense.category =category;
+
+        await expense.save();
+
+        res.status(200).json(expense);
+    } catch (error) {
+        res.status(500).json({
+            message: error.message,
+
+
+            });
+        
+    };
+}
 module.exports = {
 addExpense,
 getExpenses,
 deleteExpense,
+updateExpense,
 };
