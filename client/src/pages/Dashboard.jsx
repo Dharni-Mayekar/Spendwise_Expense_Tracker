@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import API from "../services/api";
 
-import Navbar from "../components/Navbar";
 import ExpenseForm from "../components/ExpenseForm";
 import ExpenseList from "../components/ExpenseList";
 import Analytics from "../components/Analytics";
@@ -43,7 +42,7 @@ const totalExpense = expenses.reduce(
 
 return (
     <>
-    <Navbar />
+   
 <div className="dashboard-cards">
 
 <div className = "card expense-card">
@@ -64,12 +63,7 @@ return (
 <Analytics expenses = {expenses} />
 <Budget expenses={expenses}/>
 <AIInsights expenses={expenses} />
-<ExpenseForm fetchExpenses={fetchExpenses} />
-<ExpenseList expenses={expenses} 
-fetchExpenses={fetchExpenses}
-selectedCategory={selectedCategory}
-setSelectedCategory={setSelectedCategory}
-/>
+
 </>
 );
 }
