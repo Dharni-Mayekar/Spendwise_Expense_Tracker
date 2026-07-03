@@ -30,8 +30,20 @@ localStorage.setItem(
 "token",
 res.data.token
 );
+localStorage.setItem(
+    "user",
+    JSON.stringify({
+        _id: res.data._id,
+        name: res.data.name,
+        email: res.data.email,
 
-navigate("/dashboard");
+    })
+);
+
+    console.log("Token:", localStorage.getItem("token"));
+    console.log("User:", localStorage.getItem("user"));
+    
+navigate("/");
 
 } catch (error) {
 console.log(error);

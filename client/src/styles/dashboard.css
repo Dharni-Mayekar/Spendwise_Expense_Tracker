@@ -27,12 +27,16 @@
 
 .expense-card{
     background:#2563EB;
+    margin-top:30px;
 }
 
 .budget-card{
     background:#22C55E;
+    margin-top:30px;
 }
 
 .savings-card{
     background:#F59E0B;
+    margin-top:30px;
 }
+

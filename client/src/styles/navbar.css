@@ -1,0 +1,40 @@
+.navbar {
+    height: 90px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 30px;
+    margin-left: 240px;
+}
+
+.navbar-left h2{
+    margin:0;
+    color:#1E3A8A;
+}
+
+.navbar-left p{
+    margin:2px 0 0;
+    color:#666;
+    font-size:14px;
+}
+
+.navbar-right{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    font-size:22px;
+}
+
+.profile{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#2563EB;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-weight:bold;
+}

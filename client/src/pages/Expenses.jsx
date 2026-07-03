@@ -32,7 +32,7 @@ fetchExpenses();
 }, []);
 
     return (
-        <div style={{ padding: "20px"}}>
+        <div style={{ padding: "30px"}}>
             <h1>Expenses</h1>
 <>
 <ExpenseForm fetchExpenses={fetchExpenses} />
