@@ -1,74 +1,99 @@
+import "../styles/analytics.css";
 import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
+  PieChart, Pie, Bar,
+  Cell, Tooltip, 
+  Legend, BarChart,
+  ResponsiveContainer, LineChart,
+  Line, XAxis, YAxis, CartesianGrid,
 } from "recharts";
 
 function Analytics({ expenses }) {
 
-  // CATEGORY TOTALS
-  const categoryData = [];
-
-  const categories = {};
-
-  expenses.forEach((expense) => {
-
-    if (categories[expense.category]) {
-      categories[expense.category] += expense.amount;
-    } else {
-      categories[expense.category] = expense.amount;
-    }
-
-  });
-
-  for (let category in categories) {
-    categoryData.push({
-      name: category,
-      value: categories[category],
-    });
-  }
 
   const COLORS = [
-    "#0088FE",
-    "#00C49F",
-    "#FFBB28",
-    "#FF8042",
-    "#A855F7",
-  ];
+  "#4cb1a1",
+  "#3B82F6",
+  "#F59E0B",
+  "#EF4444",
+  "#8B5CF6",
+  "#10B981",
+];
+
+
+  const months = ["Jan", "Feb", "Mar", "Apr","May","Jun", 
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    const monthlyData = [];
+    
+    expenses.forEach((expense) => {
+      const d = new Date(expense.date);
+
+      const month = months[d.getMonth()];
+
+      const existingMonth = monthlyData.find(
+        (item) => item.month === month ); 
+
+      if (existingMonth) {
+        existingMonth.amount += Number(expense.amount);
+      } else {
+        monthlyData.push({
+          month,
+          amount: Number(expense.amount),
+        
+        });
+        monthlyData.sort(
+    (a, b) => months.indexOf(a.month) - months.indexOf(b.month)
+);
+      }
+      });
+     
+
+
+      const categoryData = [];
+
+      expenses.forEach((expense) => {
+       const category = expense.category;
+       
+       const existingCategory = categoryData.find(
+        (item) => item.category === category
+       ); 
+
+      if (existingCategory) {
+        existingCategory.amount += Number(expense.amount);
+      } else {
+        categoryData.push({
+          category,
+          amount: Number(expense.amount),
+        });
+      }
+
+    });
+
+      
+        categoryData.sort(
+    (a, b) => b.amount - a.amount);
+   
 
   return (
-    <div
-      style={{
-        background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        marginBottom: "20px",
-      }}
-    >
+    <div>
+      
+<h2 className="analytics-title">
+Expense Analytics
+</h2>
 
-      <h2
-  style={{
-    color: "#1E3A8A",
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginBottom: "15px",
-  }}
->
-Expense Analytics</h2>
-
-      <ResponsiveContainer width="100%" height={300}>
-
+<div className="chart-card">
+  <h3 className="chart-title">
+    Category Distribution
+  </h3>
+    <ResponsiveContainer width="100%" height={350}>
         <PieChart>
 
           <Pie
-            data={categoryData}
-            dataKey="value"
-            nameKey="name"
-            outerRadius={100}
-            label
+    data={categoryData}
+    dataKey="amount"
+    nameKey="category"
+    outerRadius={100}
+    label
           >
 
             {
@@ -81,16 +106,53 @@ Expense Analytics</h2>
                 />
               ))
             }
+            
 
           </Pie>
-
           <Tooltip />
-
           <Legend />
-
         </PieChart>
-
       </ResponsiveContainer>
+      </div>
+
+      <div className="chart-card">
+    <h3 className="chart-title">
+     Monthly Spending Trend
+    </h3>
+
+      <ResponsiveContainer width="100%" height={400}>
+        <LineChart data={monthlyData}>
+          <CartesianGrid strokeDasharray="3 3"/>
+          <XAxis dataKey="month"/>
+          <YAxis />
+          <Tooltip />
+        <Line
+    type="monotone"
+    dataKey="amount"
+    stroke="#4cb1a1"
+    strokeWidth={3}
+/>
+        </LineChart>
+      </ResponsiveContainer>
+      </div>
+    
+    <div className="chart-card">
+    <h3 className="chart-title">
+     Category-wise Spending
+    </h3>
+    <ResponsiveContainer width="100%" height={400}>
+  <BarChart data={categoryData}>
+    <CartesianGrid strokeDasharray="3 3" />
+    <XAxis dataKey="category" />
+    <YAxis />
+    <Tooltip />
+ <Bar
+  dataKey="amount"
+  fill="#4cb1a1"
+/>
+  </BarChart>
+</ResponsiveContainer>
+</div>
 
     </div>
   );
