@@ -29,8 +29,6 @@ const handleLogout = () => {
             <br/>
             <NavLink to="/analytics">Analytics</NavLink>
             <br/>
-            <NavLink to="/budget">Budget</NavLink>
-            <br/>
             <NavLink to="/reports">Reports</NavLink>
             <br/>
             <NavLink to="/profile">Profile</NavLink>  

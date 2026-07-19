@@ -1,0 +1,45 @@
+body {
+  background: #f5f7fb;
+  color: #111827;
+  transition: 0.3s;
+}
+
+body.dark {
+  background: #111827;
+  color: white;
+}
+
+body.dark .card,
+body.dark .expense-card,
+body.dark .budget-card,
+body.dark .analytics-card,
+body.dark .report-card,
+body.dark .budget-card-main {
+  background: #1f2937;
+  color: white;
+}
+
+body.dark input,
+body.dark select,
+body.dark textarea {
+  background: #374151;
+  color: white;
+  border: 1px solid #555;
+}
+
+body.dark table {
+  background: #1f2937;
+  color: white;
+}
+
+body.dark th {
+  background: #374151;
+}
+
+body.dark td {
+  border-color: #444;
+}
+
+body.dark button {
+  transition: 0.3s;
+}

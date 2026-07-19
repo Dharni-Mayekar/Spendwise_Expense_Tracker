@@ -1,4 +1,6 @@
 import "../styles/analytics.css";
+import "../styles/common.css";
+
 import {
   PieChart, Pie, Bar,
   Cell, Tooltip, 
@@ -72,14 +74,61 @@ function Analytics({ expenses }) {
       
         categoryData.sort(
     (a, b) => b.amount - a.amount);
-   
+
+
+const totalExpense = expenses.reduce(
+  (acc, expense) => acc + Number(expense.amount),
+  0
+);
+
+const totalTransactions = expenses.length;
+
+const averageExpense =
+  expenses.length > 0
+    ? (totalExpense / expenses.length).toFixed(2)
+    : 0;
+
+let highestCategory = "";
+let highestAmount = 0;
+
+categoryData.forEach((item) => {
+  if (item.amount > highestAmount) {
+    highestAmount = item.amount;
+    highestCategory = item.category;
+  }
+});
 
   return (
-    <div>
+<div className="analytics-container">
       
 <h2 className="analytics-title">
 Expense Analytics
 </h2>
+<div className="summary-grid">
+
+  <div className="summary-card">
+    <h3>Total Expense</h3>
+    <p>₹ {totalExpense}</p>
+  </div>
+
+  <div className="summary-card">
+    <h3>Transactions</h3>
+    <p>{totalTransactions}</p>
+  </div>
+
+  <div className="summary-card">
+    <h3>Average Expense</h3>
+    <p>₹ {averageExpense}</p>
+  </div>
+
+  <div className="summary-card">
+    <h3>Highest Category</h3>
+    <p>
+  {highestCategory} (₹ {highestAmount})
+</p>
+  </div>
+
+</div>
 
 <div className="chart-card">
   <h3 className="chart-title">
@@ -88,12 +137,14 @@ Expense Analytics
     <ResponsiveContainer width="100%" height={350}>
         <PieChart>
 
-          <Pie
-    data={categoryData}
-    dataKey="amount"
-    nameKey="category"
-    outerRadius={100}
-    label
+    <Pie
+      data={categoryData}
+  dataKey="amount"
+  nameKey="category"
+  outerRadius={120}
+  label={({ category, percent }) =>
+    `${category} ${(percent * 100).toFixed(0)}%`
+  }
           >
 
             {
@@ -127,10 +178,12 @@ Expense Analytics
           <YAxis />
           <Tooltip />
         <Line
-    type="monotone"
-    dataKey="amount"
-    stroke="#4cb1a1"
-    strokeWidth={3}
+  type="monotone"
+  dataKey="amount"
+  stroke="#4cb1a1"
+  strokeWidth={3}
+  dot={{ r: 5 }}
+  activeDot={{ r: 8 }}
 />
         </LineChart>
       </ResponsiveContainer>
@@ -149,6 +202,7 @@ Expense Analytics
  <Bar
   dataKey="amount"
   fill="#4cb1a1"
+  radius={[8, 8, 0, 0]}
 />
   </BarChart>
 </ResponsiveContainer>

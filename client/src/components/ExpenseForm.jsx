@@ -44,31 +44,39 @@ console.log(error);
 };
 
 return (
-<div>
-<h2>Add Expense</h2>
-<form onSubmit={handleSubmit}>
-<input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} />
-<br/><br/>
-<input type="number" name="amount" placeholder="Amount" value={formData.amount} onChange={handleChange} />
-<br/><br/>
+  <div className="form-card">
+    <h2>Add Expense</h2>
 
-<input
-  type="text"
-  name="category"
-  placeholder="Enter Category"
-  value={formData.category}
-  onChange={handleChange}
-  style={{
-    width: "100%",
-    padding: "10px",
-    borderRadius: "6px",
-    marginBottom: "10px",
-  }}
-/>
-<br/><br/>
-<button type="submit">Add Expense</button>
-</form>
-</div>
+    <form className="expense-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        name="title"
+        placeholder="Title"
+        value={formData.title}
+        onChange={handleChange}
+      />
+
+      <input
+        type="number"
+        name="amount"
+        placeholder="Amount"
+        value={formData.amount}
+        onChange={handleChange}
+      />
+
+      <input
+        type="text"
+        name="category"
+        placeholder="Category"
+        value={formData.category}
+        onChange={handleChange}
+      />
+
+      <button type="submit">
+        Add Expense
+      </button>
+    </form>
+  </div>
 );
 }
 

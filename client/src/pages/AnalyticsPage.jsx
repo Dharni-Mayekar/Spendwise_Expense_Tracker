@@ -1,5 +1,6 @@
 
 import Analytics from "../components/Analytics";
+import "../styles/common.css";
 
 import { useEffect, useState } from "react";
 

@@ -48,16 +48,7 @@ function AIInsights({ expenses }) {
   }
 
   return (
-    <div
-      style={{
-        background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        marginBottom: "20px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
-	color: "#7C3AED"
-      }}
-    >
+    <div className="budget-card-main">
       <h2
   style={{
     color: "#1E3A8A",

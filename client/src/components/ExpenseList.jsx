@@ -6,16 +6,14 @@ function ExpenseList({
     expenses,
     fetchExpenses,
     selectedCategory,
-    setSelectedCategory
+    setSelectedCategory,
+    dashboard = false,
  }) {
 
   const [editingExpense, setEditingExpense] =
   useState(null);
     const [searchTerm, setSearchTerm] =
     useState("");
-
-    console.log(expenses[0]);
-console.log(selectedCategory);
 
 const handleDelete = async (id) => {
 try {
@@ -70,18 +68,24 @@ const filteredExpenses =
         (expense) =>
           expense.category === selectedCategory
       );
+      
 const searchedExpenses = filteredExpenses.filter(
   (expense) => 
     expense.title.toLowerCase().includes(
       searchTerm.toLowerCase()));
-    
-console.log("editingExpense:", editingExpense);
+
+const finalExpenses = dashboard
+  ? [...searchedExpenses]
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      .slice(0, 3)
+  : searchedExpenses;
 
 const categories = [
   "All",
   ...new Set(expenses.map((expense) => expense.category))
 ];
 
+  
 return (
 <div style={{
     background: "white",
@@ -91,8 +95,11 @@ return (
     boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
 }}
 >
-<h2>Recent Transactions</h2>
-<select
+<h2>
+  {dashboard ? "Recent Transactions" : "All Expenses"}
+</h2>
+{!dashboard && (
+  <select 
   value={selectedCategory}
   onChange={(e) =>
     setSelectedCategory(e.target.value)
@@ -109,12 +116,17 @@ return (
   </option>
   
 ))}</select>
-  <input 
+)}
+
+
+  {!dashboard && (
+<input 
 type="text" 
 placeholder="Search Expense..." 
 value= {searchTerm}
 onChange={(e) => setSearchTerm(e.target.value)}
 style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>  
+  )}
 
 
 <table style={{
@@ -131,13 +143,13 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
           <th style={{ padding: "12px" }}>Category</th>
           <th style={{ padding: "12px" }}>Amount</th>
           <th style={{ padding: "12px" }}>Date</th>
-          <th style={{ padding: "12px" }}>Edit</th>
-          <th style={{ padding: "12px" }}>Delete</th>            
+          {!dashboard && <th style={{ padding: "12px" }}>Edit</th>}
+          {!dashboard && <th style={{ padding: "12px" }}>Delete</th>}         
         </tr>
     </thead>
     <tbody>
         {
-            searchedExpenses.map((expense) => (
+            finalExpenses.map((expense) => (
                 <tr key = { expense._id}
                 style={{
                     textAlign: "center",
@@ -164,11 +176,11 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
 <td style={{ padding: "12px" }}>
   {new Date(expense.createdAt).toLocaleDateString()}
 </td>
-<td>
+{!dashboard && (<td>
   <button
   onClick={() => { 
-    console.log("edit clicked");
-    console.log(expense);
+    
+    
     setEditingExpense(expense);
   }}
   style={{
@@ -183,9 +195,9 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
 >
   Edit
 </button>
-</td>
+</td>)}
 
-            <td style={{ padding: "12px" }}>
+           {!dashboard && ( <td style={{ padding: "12px" }}>
               <button
                 onClick={() =>
                   handleDelete(expense._id)
@@ -201,12 +213,32 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
               >
                 Delete
               </button>
-            </td>
+            </td>)}
           </tr>
             ))
         }
     </tbody>
 </table>
+
+{dashboard && (
+  <div style={{ textAlign: "right", marginTop: "15px" }}>
+    <button
+      onClick={() => window.location.href = "/expenses"}
+      style={{
+        background: "#2563EB",
+        color: "white",
+        border: "none",
+        padding: "8px 16px",
+        borderRadius: "6px",
+        cursor: "pointer",
+      }}
+    >
+      View All →
+    </button>
+  </div>
+)}
+
+
 {
   editingExpense && (
   <div

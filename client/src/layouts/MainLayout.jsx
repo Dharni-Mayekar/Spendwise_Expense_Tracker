@@ -4,19 +4,33 @@ import Navbar from "../components/Navbar";
 
 function MainLayout() {
     return (
-        <div style={{ dispaly: "flex" }}>
-            <Sidebar />
-
         <div
   style={{
-    flex: 1,
-    marginLeft: "240px",
-    background: "#F3F4F6",
+    display: "flex",
     minHeight: "100vh",
   }}
 >
+            <Sidebar />
+
+<div
+  style={{
+    flex: 1,
+    marginLeft: "240px",
+background: "var(--bg)",
+    minHeight: "100vh",
+    padding: "30px",
+    boxSizing: "border-box",
+  }}
+>
             <Navbar />
-            <Outlet />
+            <div
+  style={{
+    maxWidth: "1350px",
+    margin: "20px auto",
+  }}
+>
+  <Outlet />
+</div>
 
         </div>
         </div>
