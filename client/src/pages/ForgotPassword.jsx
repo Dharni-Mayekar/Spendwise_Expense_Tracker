@@ -6,18 +6,27 @@ function ForgotPassword() {
 
   const [email, setEmail] = useState("");
 
-  const handleForgotPassword = async () => {
-    try {
-      const res = await API.post("/auth/forgot-password", {
-        email,
-      });
+ const handleForgotPassword = async () => {
+  console.log("Button clicked");
 
-      alert(res.data.message);
+  try {
+    console.log("Before API");
 
-    } catch (error) {
-      alert(error.response?.data?.message || "Something went wrong");
-    }
-  };
+    const res = await API.post("/auth/forgot-password", {
+      email,
+    });
+
+    console.log("After API");
+    console.log(res.data);
+
+    alert(res.data.message);
+  } catch (error) {
+    console.log("Catch Block");
+    console.log(error);
+
+    alert(error.response?.data?.message || "Something went wrong");
+  }
+};
 
   return (
     <div
