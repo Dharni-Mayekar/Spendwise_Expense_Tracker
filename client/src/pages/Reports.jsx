@@ -41,6 +41,7 @@ function Reports() {
     const totalTransactions = expenses.length;
 
     const downloadCSV = () => {
+        console.log(expenses);
         const headers = "Title,Category,Amount,Date\n";
 
         const rows = expenses.map((expense) => 
@@ -48,6 +49,9 @@ function Reports() {
     );
 
     const csv = headers + rows.join("\n");
+
+
+alert(csv);
 
     const blob = new Blob([csv], {
         type: "text/csv;charset=utf-8;",
