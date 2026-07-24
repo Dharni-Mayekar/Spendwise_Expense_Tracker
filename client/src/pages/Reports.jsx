@@ -8,6 +8,7 @@ function Reports() {
 
     useEffect(() => {
         fetchExpenses();
+        fetchBudget();
 
     }, []);
 
@@ -30,12 +31,27 @@ function Reports() {
         }
     };
 
+    const fetchBudget = async () => {
+  try {
+    const token = localStorage.getItem("token");
+
+    const res = await API.get("/budget", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    setBudget(res.data.amount);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
     const totalExpense = expenses.reduce(
         (acc, item) => acc + Number(item.amount), 0
     );
 
-    const budget = Number(localStorage.getItem("budget")) || 0;
-    
+const [budget, setBudget] = useState(0);    
     const remaining = budget - totalExpense;
 
     const totalTransactions = expenses.length;
