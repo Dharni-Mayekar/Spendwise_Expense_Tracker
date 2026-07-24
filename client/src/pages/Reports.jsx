@@ -40,25 +40,24 @@ function Reports() {
 
     const totalTransactions = expenses.length;
 
-    const downloadCSV = () => {
-        console.log(expenses);
-        const headers = "Title,Category,Amount,Date\n";
+const downloadCSV = () => {
+  const headers = "Title,Category,Amount,Date";
 
-        const rows = expenses.map((expense) => 
-            `${expense.title},${expense.category},${expense.amount},${new Date(expense.date).toLocaleDateString()}`
-    );
+  const rows = expenses.map((expense) => [
+    expense.title,
+    expense.category,
+    expense.amount,
+    new Date(expense.date).toLocaleDateString("en-GB"),
+  ]);
 
-    const csv = headers + rows.join("\n");
+  const csv = [headers, ...rows.map((row) => row.join(","))].join("\r\n");
 
+  const blob = new Blob(["\uFEFF" + csv], {
+    type: "application/csv;charset=utf-8;",
+  });
 
-alert(csv);
-
-    const blob = new Blob([csv], {
-        type: "text/csv;charset=utf-8;",
-    });
-
-    saveAs(blob, "Expense_Report.csv");
-    };
+  saveAs(blob, "Expense_Report.csv");
+};
 
      return (
     <div
