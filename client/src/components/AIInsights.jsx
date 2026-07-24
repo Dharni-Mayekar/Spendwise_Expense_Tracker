@@ -1,3 +1,5 @@
+import "../styles/ai.css";
+
 function AIInsights({ expenses }) {
 
   // TOTAL EXPENSE
@@ -48,23 +50,15 @@ function AIInsights({ expenses }) {
   }
 
   return (
-    <div className="budget-card-main">
-      <h2
-  style={{
-    color: "#1E3A8A",
-    fontSize: "24px",
-    fontWeight: "bold",
-    marginBottom: "15px",
-  }}
->
+<div className="ai-container">     
+   <h2 className="ai-title">
   AI Financial Insights
 </h2>
 
       {expenses.length === 0 ? (
-        <p>No expenses added yet.</p>
-      ) : (
-        <>
-          {/* INSIGHT 1 */}
+<p className="ai-empty">No expenses added yet.</p>      ) : (
+<div className="ai-content">
+            {/* INSIGHT 1 */}
           <p>
             Highest spending category:
             <strong>
@@ -98,8 +92,7 @@ function AIInsights({ expenses }) {
             <strong>{expenses.length}</strong>{" "}
             transactions so far.
           </p>
-        </>
-      )}
+</div>      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import API from "../services/api";
 import {useState} from "react";
-
+import "../styles/expense.css";
 
 function ExpenseList({
     expenses,
@@ -87,132 +87,80 @@ const categories = [
 
   
 return (
-<div style={{
-    background: "white",
-    padding: "20px",
-    borderRadius:"10px",
-    marginTop: "20px",
-    boxShadow: "0 2px 8px rgba(0,0,0,0.1)"
-}}
->
-<h2>
+<div className="expense-container">
+<h2 className="expense-title">
   {dashboard ? "Recent Transactions" : "All Expenses"}
 </h2>
 {!dashboard && (
-  <select 
-  value={selectedCategory}
-  onChange={(e) =>
-    setSelectedCategory(e.target.value)
-  }
-  style={{
-    padding: "10px",
-    marginBottom: "15px",
-    borderRadius: "6px"
-  }}
->
-{categories.map((category) => (
-  <option key={category} value={category}>
-    {category}
-  </option>
+  <div className="expense-toolbar">
+    <select
+      className="expense-select"
+      value={selectedCategory}
+      onChange={(e) => setSelectedCategory(e.target.value)}
+    >
+      {categories.map((category) => (
+        <option key={category} value={category}>
+          {category}
+        </option>
+      ))}
+    </select>
+
+    <input
+      className="expense-search"
+      type="text"
+      placeholder="Search Expense..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+    />
+  </div>
+)} 
   
-))}</select>
-)}
 
 
-  {!dashboard && (
-<input 
-type="text" 
-placeholder="Search Expense..." 
-value= {searchTerm}
-onChange={(e) => setSearchTerm(e.target.value)}
-style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>  
-  )}
+<table className="expense-table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Amount</th>
+      <th>Date</th>
 
+      {!dashboard && <th>Edit</th>}
+      {!dashboard && <th>Delete</th>}
+    </tr>
+  </thead>
 
-<table style={{
-    width:"100%",
-    borderCollapse:"collapse",
-    marginTop:"15px"
-}}>
-    <thead>
-        <tr style={{
-            background: "#2563EB",
-            color: "white"
-        }}>
-          <th style={{ padding: "12px" }}>Title</th>
-          <th style={{ padding: "12px" }}>Category</th>
-          <th style={{ padding: "12px" }}>Amount</th>
-          <th style={{ padding: "12px" }}>Date</th>
-          {!dashboard && <th style={{ padding: "12px" }}>Edit</th>}
-          {!dashboard && <th style={{ padding: "12px" }}>Delete</th>}         
-        </tr>
-    </thead>
-    <tbody>
+  <tbody>
         {
             finalExpenses.map((expense) => (
                 <tr key = { expense._id}
-                style={{
-                    textAlign: "center",
-                    borderBottom: "1px solid #ddd"
-                }}>
-                    <td style={{ padding: "12px" }}>
-                        {expense.title}
-                    </td>
+                >
+<td>{expense.title}</td>
 
-            <td style={{ padding: "12px" }}>
-              {expense.category}
-            </td>
+<td>{expense.category} </td>
 
-                        <td
-              style={{
-                padding: "12px",
-                color: "#16A34A",
-                fontWeight: "bold"
-              }}
-            >
-              ₹{expense.amount}
-            </td>
+<td className="amount">
+₹{expense.amount}
+</td>
 
-<td style={{ padding: "12px" }}>
-  {new Date(expense.createdAt).toLocaleDateString()}
+<td>{new Date(expense.createdAt).toLocaleDateString()}
 </td>
 {!dashboard && (<td>
-  <button
-  onClick={() => { 
-    
-    
-    setEditingExpense(expense);
-  }}
-  style={{
-    background: "#F59E0B",
-    color: "white",
-    border: "none",
-    padding: "8px 14px",
-    borderRadius: "6px",
-    cursor: "pointer",
-    marginRight: "8px"
-  }}
+<button
+  className="edit-btn"
+  onClick={() => setEditingExpense(expense)}
 >
   Edit
 </button>
 </td>)}
 
-           {!dashboard && ( <td style={{ padding: "12px" }}>
-              <button
-                onClick={() =>
-                  handleDelete(expense._id)
-                }
-                style={{
-                  background: "#EF4444",
-                  color: "white",
-                  border: "none",
-                  padding: "8px 14px",
-                  borderRadius: "6px",
-                  cursor: "pointer"
-                }}
-              >
-                Delete
-              </button>
+ {!dashboard && ( <td style={{ padding: "12px" }}>
+<button
+  className="delete-btn"
+  onClick={() => handleDelete(expense._id)}
+>
+  Delete
+</button>
             </td>)}
           </tr>
             ))
@@ -221,49 +169,21 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
 </table>
 
 {dashboard && (
-  <div style={{ textAlign: "right", marginTop: "15px" }}>
-    <button
-      onClick={() => window.location.href = "/expenses"}
-      style={{
-        background: "#2563EB",
-        color: "white",
-        border: "none",
-        padding: "8px 16px",
-        borderRadius: "6px",
-        cursor: "pointer",
-      }}
-    >
-      View All →
-    </button>
+<div className="action-right">
+  <button
+  className="view-btn"
+  onClick={() => (window.location.href = "/expenses")}
+>
+  View All →
+</button>
   </div>
 )}
 
 
 {
   editingExpense && (
-  <div
-    style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      background: "rgba(0,0,0,0.4)",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      zIndex: 9999,
-    }}
-  >
-    <div
-      style={{
-        background: "white",
-        width: "420px",
-        padding: "25px",
-        borderRadius: "12px",
-        boxShadow: "0 5px 25px rgba(0,0,0,0.3)",
-      }}
-    >
+<div className="modal-overlay">
+<div className="modal-card">
       <h3>Edit Expense</h3>
 
       <input
@@ -275,15 +195,7 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
             title: e.target.value
           })
         }
-        style={{
-    width: "95%",
-    padding: "12px",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    outline: "none",
-    marginBottom: "15px",
-  }}
+className="modal-input"
       />
 
       <br /><br />
@@ -297,15 +209,7 @@ style ={{ padding: "10px", marginLeft: "10px", borderRadius: "6px" }}/>
       amount: e.target.value,
     })
   }
-  style={{
-    width: "95%",
-    padding: "12px",
-    fontSize: "16px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    outline: "none",
-    marginBottom: "15px",
-  }}
+  className="modal-input"
 />
 
 <input type="text" 
@@ -317,44 +221,18 @@ onChange={(e) =>
 
   })
 }
-style={{
-      width: "100%",
-    padding: "12px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    marginBottom: "20px",
-  }}
+className="modal-input"
 />
 
       <br/><br/>
  
-<button
-  onClick={handleUpdate}
-  style={{
-    background: "#2563EB",
-    color: "white",
-    border: "none",
-    padding: "12px 22px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: "bold",
-    marginRight: "10px",
-  }}
->
+<button className="save-btn" onClick={handleUpdate}>
   Save
 </button>
 
 <button
+  className="cancel-btn"
   onClick={() => setEditingExpense(null)}
-  style={{
-    background: "#6B7280",
-    color: "white",
-    border: "none",
-    padding: "12px 22px",
-    borderRadius: "8px",
-    cursor: "pointer",
-    fontWeight: "bold",
-  }}
 >
   Cancel
 </button>

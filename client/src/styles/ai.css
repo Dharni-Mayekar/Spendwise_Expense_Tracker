@@ -1,0 +1,32 @@
+.ai-container{
+    background: var(--surface);
+    color: var(--text);
+    padding: 30px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+}
+
+.ai-title{
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.ai-content p{
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 15px;
+}
+
+.ai-content strong{
+    color: var(--primary);
+}
+
+.ai-empty{
+    color: var(--text-light);
+    font-size: 17px;
+}

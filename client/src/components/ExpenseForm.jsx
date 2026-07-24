@@ -1,5 +1,7 @@
 import { useState } from "react";
 import API from "../services/api";
+import "../styles/expense.css";
+import "../styles/common.css";
 
 function ExpenseForm({ fetchExpenses }) {
 const [formData, setFormData] = useState({

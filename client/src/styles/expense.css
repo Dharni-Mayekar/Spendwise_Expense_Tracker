@@ -1,0 +1,245 @@
+.expense-container{
+    background: var(--surface);
+    color: var(--text);
+    padding: 25px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+}
+
+.expense-title{
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.expense-toolbar{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.expense-select,
+.expense-search{
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    outline: none;
+    font-size: 15px;
+}
+
+.expense-search{
+    flex: 1;
+    min-width: 220px;
+}
+
+.expense-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+}
+
+.expense-table thead{
+    background:var(--primary);
+}
+
+.expense-table th{
+    color:white;
+    padding:14px;
+    text-align:center;
+}
+
+.expense-table td{
+    padding:14px;
+    text-align:center;
+    border-bottom:1px solid var(--border);
+    color:var(--text);
+}
+
+.amount{
+    color:var(--success);
+    font-weight:bold;
+}
+
+.edit-btn{
+    background:#f59e0b;
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.delete-btn{
+    background:var(--danger);
+    color:white;
+    border:none;
+    padding:8px 14px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.view-btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.action-right{
+    text-align:right;
+    margin-top:20px;
+}
+
+/* Modal */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+.modal-card{
+    width:420px;
+    background:var(--surface);
+    color:var(--text);
+    padding:30px;
+    border-radius:16px;
+    box-shadow:var(--shadow);
+}
+
+.modal-card h3{
+    margin-bottom:20px;
+}
+
+.modal-input{
+    width:100%;
+    padding:12px;
+    margin-bottom:16px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    background:var(--surface);
+    color:var(--text);
+    box-sizing:border-box;
+}
+
+.save-btn{
+    background:var(--primary);
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+    margin-right:10px;
+}
+
+.cancel-btn{
+    background:#6b7280;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+@media(max-width:768px){
+
+.expense-toolbar{
+    flex-direction:column;
+}
+
+.expense-search{
+    width:100%;
+}
+
+.expense-table{
+    display:block;
+    overflow-x:auto;
+}
+
+.modal-card{
+    width:92%;
+}
+
+}
+
+.form-card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: var(--shadow);
+}
+
+.form-card h2{
+    color: var(--text);
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.expense-form{
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.expense-form input{
+    flex: 1;
+    min-width: 180px;
+    padding: 12px 15px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 16px;
+    outline: none;
+    transition: .25s;
+}
+
+.expense-form input:focus{
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,.15);
+}
+
+.expense-form button{
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: .25s;
+}
+
+.expense-form button:hover{
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+@media (max-width:768px){
+
+.expense-form{
+    flex-direction: column;
+}
+
+.expense-form input,
+.expense-form button{
+    width:100%;
+}
+
+}

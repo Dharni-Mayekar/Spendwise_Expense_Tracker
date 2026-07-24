@@ -2,6 +2,7 @@ import {useEffect, useState } from "react";
 import {saveAs} from "file-saver";
 import API from "../services/api";
 import "../styles/common.css";
+import "../styles/reports.css";
 
 function Reports() {
     const [expenses, setExpenses] = useState([]);
@@ -76,21 +77,10 @@ const downloadCSV = () => {
 };
 
      return (
-    <div
-      style={{
-        background: "#fff",
-        padding: "30px",
-        borderRadius: "12px",
-      }}
-    >
-      <h2
-        style={{
-          color: "#1E3A8A",
-          marginBottom: "25px",
-        }}
-      >
-        Expense Report
-      </h2>
+   <div className="report-container">
+     <h2 className="report-title">
+Expense Report
+</h2>
 
   <div className="summary-grid">
 
@@ -116,33 +106,14 @@ const downloadCSV = () => {
 
 </div>
 
-<div style={{ textAlign: "center", marginTop: "30px" }}>
-  <button
-    onClick={downloadCSV}
-    style={{
-      background: "#4CB1A1",
-      color: "white",
-      border: "none",
-      padding: "14px 30px",
-      borderRadius: "10px",
-      fontSize: "16px",
-      fontWeight: "600",
-      cursor: "pointer",
-    }}
-  >
+<div className="report-download"> <button
+className="download-btn"
+onClick={downloadCSV}
+>
     📄 Download Expense Report
   </button>
 </div>
-
-<div
-  style={{
-    maxWidth: "1100px",
-    margin: "0 auto",
-  }}
->
-  
 </div>
-    </div>
   );
 }
 

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {Link, useNavigate } from "react-router-dom";
 import API from "../services/api";
+import "../styles/auth.css";
+import "../styles/common.css";
 
 function Register() {
 
@@ -50,115 +52,49 @@ alert("Registration Failed");
 };
 
 return (
-  <div
-    style={{
-      minHeight: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-      background: "#FAFBFF",
-    }}
-  >
-    <div
-      style={{
-        width: "420px",
-        background: "white",
-        padding: "35px",
-        borderRadius: "18px",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.08)",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-          color: "#1E3A8A",
-          marginBottom: "30px",
-        }}
-      >
+ <div className="auth-page">
+<div className="auth-card">
+<h1 className="auth-title">
         Create Account
       </h1>
 
-      <form onSubmit={handleSubmit}>
-
-        <input
+<form className="auth-form" onSubmit={handleSubmit}>
+        <input className="auth-input"
           type="text"
           name="name"
           placeholder="Full Name"
           onChange={handleChange}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "18px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-            boxSizing: "border-box",
-          }}
+
         />
 
-        <input
+        <input className="auth-input"
           type="email"
           name="email"
           placeholder="Email"
           onChange={handleChange}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "18px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-            boxSizing: "border-box",
-          }}
+         
         />
 
-        <input
+        <input className="auth-input"
           type="password"
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "20px",
-            borderRadius: "10px",
-            border: "1px solid #ccc",
-            boxSizing: "border-box",
-          }}
+        
         />
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: "#4CB1A1",
-            color: "white",
-            border: "none",
-            borderRadius: "10px",
-            fontSize: "16px",
-            cursor: "pointer",
-            fontWeight: "600",
-          }}
-        >
-          Register
-        </button>
+<button
+  className="auth-btn"
+  type="submit"
+>Register</button>
 
       </form>
-
-      <p
-        style={{
-          textAlign: "center",
-          marginTop: "25px",
-        }}
-      >
+<p className="auth-footer">
         Already have an account?{" "}
-        <Link
-          to="/login"
-          style={{
-            color: "#4CB1A1",
-            textDecoration: "none",
-            fontWeight: "600",
-          }}
-        >
+<Link
+  className="auth-link"
+  to="/login"
+>
           Login
         </Link>
       </p>

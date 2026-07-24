@@ -1,5 +1,6 @@
 import {useNavigate } from "react-router-dom";
 import "../styles/common.css";
+import "../styles/profile.css";
 
 function Profile() {
     const navigate = useNavigate();
@@ -15,78 +16,30 @@ const user = userData ? JSON.parse(userData) : null;
     };
 
 return (
-  <div
-    style={{
-      maxWidth: "650px",
-      margin: "40px auto",
-      background: "var(--surface)",
-      color: "var(--text)",
-      padding: "35px",
-      borderRadius: "16px",
-      border: "1px solid var(--border)",
-      boxShadow: "var(--shadow)",
-    }}
-  >
-    <h2 className="page-title">My Profile</h2>
-
-    <div
-      style={{
-        marginTop: "30px",
-        paddingBottom: "20px",
-        borderBottom: "1px solid var(--border)",
-      }}
-    >
-      <h3 style={{ marginBottom: "8px", color: "var(--text-light)" }}>
-        Name
+<div className="profile-container">
+<h2 className="page-title">My Profile</h2>
+<div className="profile-section">
+<h3 className="profile-label">
+          Name
       </h3>
-
-      <p
-        style={{
-          fontSize: "20px",
-          fontWeight: "600",
-          color: "var(--text)",
-        }}
-      >
+<p className="profile-name">
         {user?.name}
       </p>
     </div>
 
-    <div
-      style={{
-        marginTop: "25px",
-        paddingBottom: "20px",
-        borderBottom: "1px solid var(--border)",
-      }}
-    >
-      <h3 style={{ marginBottom: "8px", color: "var(--text-light)" }}>
-        Email
+<div className="profile-section">
+<h3 className="profile-label">
+          Email
       </h3>
-
-      <p
-        style={{
-          fontSize: "18px",
-          color: "var(--text)",
-        }}
-      >
+<p className="profile-email">
         {user?.email}
       </p>
     </div>
 
-    <button
-      onClick={handleLogout}
-      style={{
-        marginTop: "35px",
-        width: "100%",
-        padding: "14px",
-        background: "var(--danger)",
-        color: "#fff",
-        border: "none",
-        borderRadius: "10px",
-        fontSize: "16px",
-        fontWeight: "600",
-        cursor: "pointer",
-      }}
-    >
+<button
+  className="logout-btn"
+  onClick={handleLogout}
+>
       Logout
     </button>
   </div>

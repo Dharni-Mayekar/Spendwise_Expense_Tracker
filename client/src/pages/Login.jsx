@@ -1,7 +1,8 @@
 import { useState } from "react";
 import {Link,  useNavigate } from "react-router-dom";
 import API from "../services/api";
-
+import "../styles/auth.css";
+import "../styles/common.css";
 
 function Login() {
 const navigate = useNavigate();
@@ -52,125 +53,60 @@ alert("Login Failed");
 };
 
 return (
-  <div
-    style={{
-      minHeight: "100vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-background: "var(--bg)",
-transition: "0.3s",    }}
-  >
-    <div
-      style={{
-        width: "420px",
-        padding: "35px",
-        borderRadius: "18px",
-        background: "var(--surface)",
-color: "var(--text)",
-border: "1px solid var(--border)",
-boxShadow: "var(--shadow)",
-      }}
-    >
-      <h1
-        style={{
-          textAlign: "center",
-color: "var(--text)",
-          marginBottom: "30px",
-        }}
-      >
+<div className="auth-page">
+<div className="auth-card">
+<h1 className="auth-title">
         Welcome Back 👋
       </h1>
 
-      <form onSubmit={handleSubmit}>
-
-        <input
-          type="email"
-          name="email"
+<form className="auth-form" onSubmit={handleSubmit}>
+<input
+  className="auth-input"
+  type="email"
+            name="email"
           placeholder="Email"
           onChange={handleChange}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "18px",
-            borderRadius: "10px",
-border: "1px solid var(--border)",
-background: "var(--surface)",
-color: "var(--text)",
-            boxSizing: "border-box",
-          }}
+        
         />
 
-        <input
-          type="password"
+       <input
+  className="auth-input"
+  type="password"
           name="password"
           placeholder="Password"
           onChange={handleChange}
-          style={{
-            width: "100%",
-            padding: "14px",
-            marginBottom: "15px",
-            borderRadius: "10px",
-border: "1px solid var(--border)",
-background: "var(--surface)",
-color: "var(--text)",
-            boxSizing: "border-box",
-          }}
+         
         />
 
-        <div
-          style={{
-            textAlign: "right",
-            marginBottom: "20px",
-          }}
-        >
-          <Link
-            to="/forgot-password"
-            style={{
-              textDecoration: "none",
-              color: "#4CB1A1",
-              fontWeight: "600",
-            }}
-          >
+     <div
+  style={{
+    textAlign: "right",
+    marginBottom: "20px",
+  }}
+>
+<Link
+  className="auth-link"
+  to="/forgot-password"
+>
             Forgot Password?
           </Link>
         </div>
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "14px",
-            background: "#4CB1A1",
-            color: "white",
-            border: "none",
-            borderRadius: "10px",
-            fontSize: "16px",
-            cursor: "pointer",
-            fontWeight: "600",
-          }}
-        >
+<button
+  className="auth-btn"
+  type="submit"
+>
           Login
         </button>
 
       </form>
 
-      <p
-  style={{
-    textAlign: "center",
-    marginTop: "25px",
-    color: "var(--text)",
-  }}
->
+<p className="auth-footer">
         Don't have an account?{" "}
-        <Link
-          to="/register"
-          style={{
-            color: "#4CB1A1",
-            fontWeight: "600",
-            textDecoration: "none",
-          }}
-        >
+<Link
+  className="auth-link"
+  to="/register"
+>
           Register
         </Link>
       </p>

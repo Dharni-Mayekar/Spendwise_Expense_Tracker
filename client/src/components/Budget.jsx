@@ -1,5 +1,6 @@
 import { useState } from "react";
 import API from "../services/api";
+import "../styles/budget.css";
 function Budget({ expenses, budget, setBudget, fetchBudget, }) {
 
 const token = localStorage.getItem("token");
@@ -41,75 +42,40 @@ const token = localStorage.getItem("token");
   };
 
   return (
-    <div
-      className="budget-card-main"
-      style={{
-        background: "white",
-        padding: "20px",
-        borderRadius: "10px",
-        marginBottom: "20px",
-      }}
-    >
-      <h2
-        style={{
-          color: "#1E3A8A",
-          fontSize: "24px",
-          fontWeight: "bold",
-          marginBottom: "15px",
-        }}
-      >
+   <div className="budget-card-main">
+      <h2 className="budget-title">
         Monthly Budget
       </h2>
 
-      <input
-        type="number"
-        placeholder="Set Budget"
-        value={budget}
-        onChange={handleBudgetChange}
-        style={{
-          padding: "10px",
-          width: "200px",
-        }}
-      />
+     <input
+className="budget-input"
+type="number"
+placeholder="Set Budget"
+value={budget}
+onChange={handleBudgetChange}
+/>
 
+      <div className="progress-bar">
       <div
-        style={{
-          background: "#ddd",
-          height: "20px",
-          borderRadius: "10px",
-          marginTop: "20px",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            width: `${Math.min(percentage, 100)}%`,
-            background:
-              percentage <= 50
-                ? "#22c55e"
-                : percentage <= 80
-                ? "#f59e0b"
-                : "#ef4444",
-            height: "100%",
-            transition: "width 0.5s",
-          }}
-        />
+className="progress-fill"
+style={{
+width:`${Math.min(percentage,100)}%`,
+background:
+percentage<=50
+?"var(--success)"
+:percentage<=80
+?"var(--warning)"
+:"var(--danger)"
+}}
+/>
       </div>
 
-      <h4
-        style={{
-          marginTop: "20px",
-        }}
-      >
+      <h4 className="remaining-text">
         Remaining: ₹ {remaining}
       </h4>
 
       {percentage > 100 && (
-        <p
-          style={{
-            color: "red",
-          }}
-        >
+       <p className="budget-warning">
           Budget Exceeded!
         </p>
       )}

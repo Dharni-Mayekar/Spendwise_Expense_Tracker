@@ -173,8 +173,7 @@ Expense Analytics
 
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={monthlyData}>
-          <CartesianGrid strokeDasharray="3 3"/>
-          <XAxis dataKey="month"/>
+<CartesianGrid stroke="var(--border)" strokeDasharray="3 3"/>          <XAxis dataKey="month"/>
           <YAxis />
           <Tooltip />
         <Line
@@ -195,8 +194,7 @@ Expense Analytics
     </h3>
     <ResponsiveContainer width="100%" height={400}>
   <BarChart data={categoryData}>
-    <CartesianGrid strokeDasharray="3 3" />
-    <XAxis dataKey="category" />
+<CartesianGrid stroke="var(--border)" strokeDasharray="3 3"/>    <XAxis dataKey="category" />
     <YAxis />
     <Tooltip />
  <Bar
