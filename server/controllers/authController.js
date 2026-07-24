@@ -131,20 +131,16 @@ dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
 });
 
 // Email Transport
+const nodemailer = require("nodemailer");
+
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
+  host: "smtp-relay.brevo.com",
   port: 587,
   secure: false,
-
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
-
-  family: 4,          // 👈 Force IPv4
-  connectionTimeout: 10000,
-  greetingTimeout: 10000,
-  socketTimeout: 10000,
 });
 
     console.log("6. Transporter created");
@@ -155,15 +151,25 @@ const resetURL =
     : `http://localhost:5173/reset-password/${resetToken}`;
     console.log("7. Sending mail...");
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: user.email,
-      subject: "SpendWise Password Reset",
-      html: `
-        <h2>Password Reset</h2>
-        <a href="${resetURL}">Reset Password</a>
-      `,
-    });
+await transporter.sendMail({
+  from: '"SpendWise" <dharni.m74@gmail.com>', // Must be a verified sender in Brevo
+  to: user.email,
+  subject: "SpendWise Password Reset",
+  html: `
+    <h2>Password Reset</h2>
+    <p>Click the button below to reset your password.</p>
+    <a href="${resetURL}" style="
+      background:#4CB1A1;
+      color:white;
+      padding:10px 18px;
+      text-decoration:none;
+      border-radius:5px;
+      display:inline-block;
+    ">
+      Reset Password
+    </a>
+  `,
+});
 
     console.log("8. Mail sent");
 
