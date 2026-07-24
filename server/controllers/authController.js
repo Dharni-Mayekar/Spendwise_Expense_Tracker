@@ -124,6 +124,12 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
+    const dns = require("dns");
+
+dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
+  console.log("SMTP addresses:", addresses);
+});
+
 // Email Transport
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
