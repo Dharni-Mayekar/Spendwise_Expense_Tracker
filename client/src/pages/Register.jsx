@@ -13,15 +13,29 @@ email:  "",
 password: "",
 });
 
+const [error, setError] = useState("");
+
 const handleChange = (e) => {
 setFormData({
 ...formData,
 [e.target.name]: e.target.value,
 });
+setError("");
 };
 
 const handleSubmit = async (e) => {
 e.preventDefault();
+
+// Validation
+if (!formData.name || !formData.email || !formData.password) {
+  setError("All fields are required");
+  return;
+}
+
+if (formData.password.length < 6) {
+  setError("Password must be at least 6 characters");
+  return;
+}
 
 try {
 const res = await API.post(
@@ -47,7 +61,7 @@ navigate("/");
 }
 catch (error) {
 console.log(error);
-alert("Registration Failed");
+setError(error.response?.data?.message || "Registration Failed");
 }
 };
 
@@ -58,11 +72,14 @@ return (
         Create Account
       </h1>
 
+{error && <div style={{color: "red", marginBottom: "15px"}}>{error}</div>}
+
 <form className="auth-form" onSubmit={handleSubmit}>
         <input className="auth-input"
           type="text"
           name="name"
           placeholder="Full Name"
+          value={formData.name}
           onChange={handleChange}
 
         />
@@ -71,6 +88,7 @@ return (
           type="email"
           name="email"
           placeholder="Email"
+          value={formData.email}
           onChange={handleChange}
          
         />
@@ -79,6 +97,7 @@ return (
           type="password"
           name="password"
           placeholder="Password"
+          value={formData.password}
           onChange={handleChange}
         
         />
@@ -105,5 +124,4 @@ return (
 } 
 
 export default Register;
-
 
