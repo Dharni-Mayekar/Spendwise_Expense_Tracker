@@ -124,19 +124,9 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
-    const dns = require("dns");
-
-dns.lookup("smtp.gmail.com", { all: true }, (err, addresses) => {
-  console.log("SMTP addresses:", addresses);
-});
-
-// Email Transport
-const nodemailer = require("nodemailer");
-
+// Email Transport - Gmail
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
+  service: "gmail",
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -152,7 +142,7 @@ const resetURL =
     console.log("7. Sending mail...");
 
 await transporter.sendMail({
-  from: '"SpendWise" <dharni.m74@gmail.com>', // Must be a verified sender in Brevo
+  from: `"SpendWise" <${process.env.EMAIL_USER}>`,
   to: user.email,
   subject: "SpendWise Password Reset",
   html: `
