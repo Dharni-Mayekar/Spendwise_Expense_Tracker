@@ -2,9 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const { Resend } = require("resend");
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require("nodemailer");
 
 //register user
 
@@ -126,16 +124,27 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
+    // Email Transport - Mailtrap SMTP
+    const transporter = nodemailer.createTransport({
+      host: process.env.MAILTRAP_HOST,
+      port: process.env.MAILTRAP_PORT,
+      auth: {
+        user: process.env.MAILTRAP_USER,
+        pass: process.env.MAILTRAP_PASS,
+      },
+    });
+
+    console.log("6. Transporter created");
+
     const resetURL =
       process.env.NODE_ENV === "production"
         ? `https://spendwise-expense-tracker-wine.vercel.app/reset-password/${resetToken}`
         : `http://localhost:5173/reset-password/${resetToken}`;
     
-    console.log("6. Reset URL created");
-    console.log("7. Sending mail via Resend...");
+    console.log("7. Sending mail via Mailtrap...");
 
-    const response = await resend.emails.send({
-      from: "SpendWise <onboarding@resend.dev>",
+    await transporter.sendMail({
+      from: `"SpendWise" <noreply@spendwise.com>`,
       to: user.email,
       subject: "SpendWise Password Reset",
       html: `
@@ -155,7 +164,7 @@ const forgotPassword = async (req, res) => {
       `,
     });
 
-    console.log("8. Mail sent successfully:", response);
+    console.log("8. Mail sent successfully");
 
     res.json({
       message: "Reset email sent successfully. Check your inbox.",
