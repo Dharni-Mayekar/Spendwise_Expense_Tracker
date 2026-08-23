@@ -2,7 +2,9 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const nodemailer = require("nodemailer");
+const sgMail = require("@sendgrid/mail");
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //register user
 
@@ -124,47 +126,37 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
-// Email Transport - Gmail with TLS on port 587
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+    const resetURL =
+      process.env.NODE_ENV === "production"
+        ? `https://spendwise-expense-tracker-wine.vercel.app/reset-password/${resetToken}`
+        : `http://localhost:5173/reset-password/${resetToken}`;
+    
+    console.log("6. Reset URL created");
 
-    console.log("6. Transporter created");
+    const msg = {
+      to: user.email,
+      from: process.env.SENDGRID_FROM_EMAIL,
+      subject: "SpendWise Password Reset",
+      html: `
+        <h2>Password Reset</h2>
+        <p>Click the button below to reset your password. This link expires in 5 minutes.</p>
+        <a href="${resetURL}" style="
+          background:#4CB1A1;
+          color:white;
+          padding:10px 18px;
+          text-decoration:none;
+          border-radius:5px;
+          display:inline-block;
+        ">
+          Reset Password
+        </a>
+        <p>If you didn't request this, ignore this email.</p>
+      `,
+    };
 
-const resetURL =
-  process.env.NODE_ENV === "production"
-    ? `https://spendwise-expense-tracker-wine.vercel.app/reset-password/${resetToken}`
-    : `http://localhost:5173/reset-password/${resetToken}`;
-    console.log("7. Sending mail...");
-
-await transporter.sendMail({
-  from: `"SpendWise" <${process.env.EMAIL_USER}>`,
-  to: user.email,
-  subject: "SpendWise Password Reset",
-  html: `
-    <h2>Password Reset</h2>
-    <p>Click the button below to reset your password. This link expires in 5 minutes.</p>
-    <a href="${resetURL}" style="
-      background:#4CB1A1;
-      color:white;
-      padding:10px 18px;
-      text-decoration:none;
-      border-radius:5px;
-      display:inline-block;
-    ">
-      Reset Password
-    </a>
-    <p>If you didn't request this, ignore this email.</p>
-  `,
-});
-
-    console.log("8. Mail sent");
+    console.log("7. Sending mail via SendGrid...");
+    await sgMail.send(msg);
+    console.log("8. Mail sent successfully");
 
     res.json({
       message: "Reset email sent successfully. Check your inbox.",
