@@ -124,7 +124,7 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
-// Email Transport - Gmail
+// Email Transport - Gmail with correct settings
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -147,7 +147,7 @@ await transporter.sendMail({
   subject: "SpendWise Password Reset",
   html: `
     <h2>Password Reset</h2>
-    <p>Click the button below to reset your password.</p>
+    <p>Click the button below to reset your password. This link expires in 5 minutes.</p>
     <a href="${resetURL}" style="
       background:#4CB1A1;
       color:white;
@@ -158,19 +158,20 @@ await transporter.sendMail({
     ">
       Reset Password
     </a>
+    <p>If you didn't request this, ignore this email.</p>
   `,
 });
 
     console.log("8. Mail sent");
 
     res.json({
-      message: "Reset email sent successfully.",
+      message: "Reset email sent successfully. Check your inbox.",
     });
 
   } catch (error) {
     console.log("ERROR:", error);
     res.status(500).json({
-      message: error.message,
+      message: "Failed to send reset email. Please try again later.",
     });
   }
 };
