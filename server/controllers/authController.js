@@ -124,9 +124,11 @@ const forgotPassword = async (req, res) => {
     await user.save();
     console.log("5. User saved");
 
-// Email Transport - Gmail with correct settings
+// Email Transport - Gmail with TLS on port 587
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
