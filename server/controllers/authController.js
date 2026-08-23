@@ -2,9 +2,9 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const sgMail = require("@sendgrid/mail");
+const { Resend } = require("resend");
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 //register user
 
@@ -132,10 +132,11 @@ const forgotPassword = async (req, res) => {
         : `http://localhost:5173/reset-password/${resetToken}`;
     
     console.log("6. Reset URL created");
+    console.log("7. Sending mail via Resend...");
 
-    const msg = {
+    const response = await resend.emails.send({
+      from: "SpendWise <onboarding@resend.dev>",
       to: user.email,
-      from: process.env.SENDGRID_FROM_EMAIL,
       subject: "SpendWise Password Reset",
       html: `
         <h2>Password Reset</h2>
@@ -152,11 +153,9 @@ const forgotPassword = async (req, res) => {
         </a>
         <p>If you didn't request this, ignore this email.</p>
       `,
-    };
+    });
 
-    console.log("7. Sending mail via SendGrid...");
-    await sgMail.send(msg);
-    console.log("8. Mail sent successfully");
+    console.log("8. Mail sent successfully:", response);
 
     res.json({
       message: "Reset email sent successfully. Check your inbox.",
